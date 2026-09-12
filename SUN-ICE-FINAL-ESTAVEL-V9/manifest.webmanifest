@@ -1,0 +1,11 @@
+{
+  "name": "Sun & Ice — Terceirão",
+  "short_name": "Sun & Ice",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f7f3e9",
+  "theme_color": "#073b7a",
+  "icons": [
+    {"src":"images/sun-and-ice-logo-small.webp","sizes":"320x320","type":"image/webp","purpose":"any maskable"}
+  ]
+}

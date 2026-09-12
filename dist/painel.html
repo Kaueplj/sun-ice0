@@ -25,7 +25,7 @@
         <label class="field"><span>Usuário</span><input id="admin-user" autocomplete="username" value="equipe" required></label>
         <label class="field"><span>Senha</span><input id="admin-password" type="password" autocomplete="current-password" required></label>
         <p class="form-error hidden" id="login-error" role="alert"></p>
-        <button class="button primary full big-button" id="login-submit">Entrar no painel</button>
+        <button class="button primary full big-button" id="login-submit" type="submit">Entrar no painel</button>
       </form>
       <div class="security-note"><b>🔒 Senha protegida no servidor</b><span>Ela não fica gravada no HTML nem no navegador.</span></div>
     </section>
@@ -83,6 +83,6 @@
   </main>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script type="module" src="js/painel.js"></script>
+  <script src="js/painel.js?v=9" defer></script>
 </body>
 </html>

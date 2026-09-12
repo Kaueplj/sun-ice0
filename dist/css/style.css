@@ -19,3 +19,10 @@
 @media(max-width:420px){.catalog-grid{grid-template-columns:1fr}.product-card{display:grid;grid-template-columns:118px 1fr}.product-visual{min-height:100%;height:100%}.product-visual img{width:78px;height:102px}.product-visual .visual-emoji{font-size:3.4rem}.product-badge{font-size:.53rem;padding:.3rem .46rem}.product-body{display:grid;align-content:center}.product-footer{flex-direction:row;align-items:end}.add-button{width:auto}.service-strip{grid-template-columns:1fr}.pix-card{grid-template-columns:1fr;text-align:center}.pix-card img{margin:auto}.stand-options{grid-template-columns:1fr}.live-metrics{grid-template-columns:1fr}.price-row{grid-template-columns:1fr 110px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 @media print{.qr-page .button,.qr-footnote{display:none}.qr-shell{width:100%;padding:0}.qr-head{margin-bottom:1rem}.qr-head h1{font-size:2rem}.qr-head p{display:none}.qr-grid{grid-template-columns:repeat(3,1fr);gap:.3cm}.qr-card{padding:.5cm;border-radius:.4cm}.qr-card h2{font-size:1.2rem}.qr-code{min-height:0}.qr-code img,.qr-code canvas{width:5.6cm!important;height:5.6cm!important}}
+
+/* Imagens de produto estáveis — brownies e picolés Sensação */
+.product-visual img.product-art{object-fit:contain;border-radius:0;background:transparent}
+.product-visual img.brownie-art{width:150px;height:125px}
+.product-visual img.popsicle-art{width:115px;height:150px}
+@media(max-width:720px){.product-visual img.brownie-art{width:112px;height:96px}.product-visual img.popsicle-art{width:82px;height:112px}}
+@media(max-width:420px){.product-visual img.brownie-art{width:94px;height:82px}.product-visual img.popsicle-art{width:70px;height:96px}}

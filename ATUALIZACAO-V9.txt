@@ -1,0 +1,45 @@
+SUN & ICE — VERSÃO FINAL ESTÁVEL V9
+
+Base usada: versão original que estava funcionando antes da alteração de preços.
+
+ALTERAÇÕES APLICADAS
+- Água: R$ 3,00
+- Brownie de Brigadeiro: R$ 12,00
+- Brownie Bem-casado: R$ 12,00
+- Brownie de Ninho: R$ 12,00
+- Os 3 brownies usam exatamente a mesma imagem de brownie.
+- Sensação de Baunilha: R$ 10,00, imagem de picolé branco.
+- Sensação de Chocolate Branco: R$ 10,00, a mesma imagem de picolé branco.
+- Sensação de Brigadeiro: R$ 10,00, imagem do mesmo tipo de picolé em marrom.
+- Cajá, Morango e Uva: R$ 6,00 cada.
+- Sacolé Mousse de Maracujá: R$ 8,00.
+- Sacolé Morango com Nutella: R$ 9,00.
+- Sacolé Maracujá com Nutella: R$ 9,00.
+- Sacolé Mousse de Morango: R$ 7,00.
+- Sacolé de Chocolate: R$ 7,00 e nome corrigido.
+- Não existem sacolés de Brigadeiro, Bem-casado ou Ninho.
+
+PAINEL
+- Mantém o mesmo endereço /painel.
+- Login continua usando ADMIN_USER, ADMIN_PASSWORD e SESSION_SECRET do Netlify.
+- O JavaScript do painel agora é autocontido para evitar quebra de import/cache.
+- Depois do login, o dashboard abre na mesma URL /painel.
+- Preços continuam editáveis individualmente pelo painel.
+- Pedidos e configurações continuam salvos no backend do Netlify.
+
+CACHE
+- JS e catálogo usam no-cache para evitar misturar arquivos de deploys diferentes.
+- Service Worker atualizado para cache v9.
+
+COMO SUBIR
+1. Extraia este ZIP.
+2. Copie TODO o conteúdo desta pasta.
+3. Cole dentro da sua pasta SUN-ICE-GIT-RAIZ.
+4. Escolha Substituir os arquivos no destino.
+5. No terminal, dentro de SUN-ICE-GIT-RAIZ:
+   git add .
+   git commit -m "Versao final estavel v9"
+   git push
+6. Espere o novo deploy do Netlify ficar verde.
+7. Abra o site com Ctrl+F5.
+8. Teste /painel.

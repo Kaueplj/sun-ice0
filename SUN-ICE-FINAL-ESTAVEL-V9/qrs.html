@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow"><title>QRs das barracas — Sun & Ice</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="qr-page">
+  <main class="qr-shell">
+    <header class="qr-head"><div><p class="eyebrow">Sun & Ice</p><h1>QR Express</h1><p>Imprima um QR por barraca. Cada link identifica automaticamente o ponto de retirada.</p></div><button class="button primary" onclick="window.print()">Imprimir QRs</button></header>
+    <div class="qr-grid" id="qr-grid"></div>
+    <p class="qr-footnote">Dica: teste cada QR com dois celulares diferentes antes do evento. Imprima em tamanho de pelo menos 8 × 8 cm.</p>
+  </main>
+  <script>
+    const grid=document.getElementById('qr-grid');
+    [1,2,3].forEach((n)=>{
+      const url=new URL('/',location.href);url.searchParams.set('b',n);
+      const card=document.createElement('article');card.className='qr-card';
+      const qr=`https://quickchart.io/qr?size=320&margin=3&ecLevel=H&dark=062f63&light=ffffff&text=${encodeURIComponent(url.href)}`;
+      card.innerHTML=`<div class="qr-logo"><img src="images/sun-and-ice-logo-small.webp" alt=""><span>SUN & ICE</span></div><h2>BARRACA ${n}</h2><p>Escaneie, peça e retire aqui.</p><div class="qr-code"><img src="${qr}" width="240" height="240" alt="QR Code da Barraca ${n}"></div><small>${url.href}</small>`;
+      grid.append(card);
+    });
+  </script>
+</body>
+</html>

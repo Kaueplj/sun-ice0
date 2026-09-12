@@ -1,9 +1,9 @@
 import { PRODUCTS, PRODUCT_MAP, DEFAULT_SETTINGS, normalizeSettings, productPrice } from "../shared/catalog.mjs";
 
-const CART_KEY = "sunice:cart:v4";
+const CART_KEY = "sunice:cart:v5";
 const LAST_ORDER_KEY = "sunice:last-order:v3";
 const CUSTOMER_NAME_KEY = "sunice:customer-name:v1";
-const SETTINGS_CACHE_KEY = "sunice:settings-cache:v2";
+const SETTINGS_CACHE_KEY = "sunice:settings-cache:v3";
 const SUCCESS_FLAG = "sunice:return-success:v1";
 const money = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -163,6 +163,19 @@ function productVisual(product) {
   if (product.id === "agua-500") {
     return `<img src="images/agua-mineral-small.webp" alt="Garrafa de água mineral" loading="lazy" width="118" height="136">`;
   }
+
+  if (product.group === "brownie") {
+    return `<img class="product-art brownie-art" src="images/brownie.svg" alt="Brownie de chocolate" loading="lazy" width="150" height="125">`;
+  }
+
+  if (product.visual === "popsicle-white") {
+    return `<img class="product-art popsicle-art" src="images/popsicle-white.svg" alt="Picolé cremoso branco" loading="lazy" width="115" height="145">`;
+  }
+
+  if (product.visual === "popsicle-brown") {
+    return `<img class="product-art popsicle-art" src="images/popsicle-brown.svg" alt="Picolé cremoso de brigadeiro" loading="lazy" width="115" height="145">`;
+  }
+
   return `<span class="visual-emoji" aria-hidden="true">${product.emoji}</span>`;
 }
 
