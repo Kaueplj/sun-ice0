@@ -1,4 +1,4 @@
-import { PRODUCTS, normalizeSettings } from "../shared/catalog.mjs";
+import { PRODUCTS, normalizeSettings } from "../shared/catalog.mjs?v=6";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const money = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
@@ -51,26 +51,70 @@ function showBackendWarning() {
   $("#backend-warning").classList.remove("hidden");
 }
 
-async function login(event) {
-  event.preventDefault();
-  const errorBox = $("#login-error");
-  errorBox.classList.add("hidden");
-  const button = $("#login-submit");
-  button.disabled = true; button.textContent = "Entrando…";
+async function refreshDashboard(silent = false) {
+  if (state.refreshing || document.hidden) return;
+
+  state.refreshing = true;
+
   try {
-    await api("/api/admin/login", { method: "POST", body: JSON.stringify({ user: $("#admin-user").value.trim(), password: $("#admin-password").value }) });
-    $("#admin-password").value = "";
-    await refreshDashboard();
-    startAutoRefresh();
+    const data = await api("/api/admin/state");
+
+    state.settings = normalizeSettings(data.settings || {});
+
+    // Compatibilidade com as duas versões da API:
+    // nova = orders
+    // antiga = pedidos
+    if (Array.isArray(data.orders)) {
+      state.orders = data.orders;
+    } else if (Array.isArray(data.pedidos)) {
+      state.orders = data.pedidos;
+    } else {
+      state.orders = [];
+    }
+
+    // Primeiro mostra o painel.
+    showDashboard();
+
+    // Depois renderiza os dados.
+    try {
+      renderAll();
+    } catch (renderError) {
+      console.error("Erro ao renderizar painel:", renderError);
+      toast("Painel conectado, mas houve erro ao exibir alguns dados.");
+    }
+
+    $("#last-refresh").textContent =
+      `Atualizado às ${new Date().toLocaleTimeString("pt-BR", {
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+      })}`;
+
+    if (!silent) toast("Painel atualizado ✓");
+
+    return true;
+
   } catch (error) {
-    if (error.code === "NOT_CONFIGURED") return showBackendWarning();
-    errorBox.textContent = error.message;
-    errorBox.classList.remove("hidden");
+    console.error("Erro ao atualizar painel:", error);
+
+    if (error.code === "NOT_CONFIGURED") {
+      showBackendWarning();
+      return false;
+    }
+
+    if (error.status === 401) {
+      showLogin();
+      return false;
+    }
+
+    if (!silent) toast(error.message);
+
+    return false;
+
   } finally {
-    button.disabled = false; button.textContent = "Entrar no painel";
+    state.refreshing = false;
   }
 }
-
 async function logout() {
   try { await api("/api/admin/logout", { method: "POST" }); } catch {}
   clearInterval(refreshTimer);
