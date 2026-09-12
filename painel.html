@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="theme-color" content="#073b7a">
+  <title>Painel da equipe — Sun & Ice</title>
+  <link rel="icon" href="images/sun-and-ice-logo-small.webp">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="panel-page">
+  <header class="site-header panel-header">
+    <a class="brand" href="index.html"><img src="images/sun-and-ice-logo-small.webp" alt="Sun & Ice" width="52" height="52"><span><strong>Sun & Ice</strong><small>Painel da equipe</small></span></a>
+    <a class="small-button" href="index.html">Abrir loja ↗</a>
+  </header>
+
+  <main class="panel-shell">
+    <section class="login-card" id="login-card">
+      <div class="login-icon">◆</div>
+      <p class="eyebrow">Acesso restrito</p>
+      <h1>Central da equipe</h1>
+      <p>Pedidos, faturamento, preços e disponibilidade em um só lugar.</p>
+      <form id="login-form">
+        <label class="field"><span>Usuário</span><input id="admin-user" autocomplete="username" value="equipe" required></label>
+        <label class="field"><span>Senha</span><input id="admin-password" type="password" autocomplete="current-password" required></label>
+        <p class="form-error hidden" id="login-error" role="alert"></p>
+        <button class="button primary full big-button" id="login-submit">Entrar no painel</button>
+      </form>
+      <div class="security-note"><b>🔒 Senha protegida no servidor</b><span>Ela não fica gravada no HTML nem no navegador.</span></div>
+    </section>
+
+    <section class="dashboard hidden" id="dashboard">
+      <div class="dashboard-top">
+        <div><div class="panel-live"><span></span>SINCRONIZADO COM NETLIFY</div><h1>Operação <em>ao vivo.</em></h1><p id="last-refresh">Atualizando…</p></div>
+        <div class="dashboard-actions"><button class="small-button" id="refresh-dashboard">↻ Atualizar</button><button class="small-button" id="export-csv">↓ CSV</button><button class="small-button danger-lite" id="logout">Sair</button></div>
+      </div>
+
+      <section class="control-bar">
+        <div><span class="control-label">LOJA AGORA</span><strong id="store-open-label">Aberta</strong></div>
+        <label class="switch"><input type="checkbox" id="store-open-toggle"><span></span></label>
+        <label class="status-message"><span>Mensagem no site</span><input id="store-message" maxlength="90"></label>
+        <button class="small-button primary-mini" id="save-store-state">Salvar</button>
+      </section>
+
+      <div class="metrics live-metrics">
+        <article class="primary-metric"><span>Faturamento confirmado</span><strong id="metric-revenue">R$ 0,00</strong><small>Pedidos pagos, prontos e entregues</small></article>
+        <article><span>Pedidos hoje</span><strong id="metric-orders">0</strong><small id="metric-pending">0 aguardando</small></article>
+        <article><span>Itens vendidos</span><strong id="metric-items">0</strong><small id="metric-ticket">Ticket médio R$ 0,00</small></article>
+        <article><span>Entregues</span><strong id="metric-delivered">0</strong><small id="metric-ready">0 prontos agora</small></article>
+      </div>
+
+      <div class="admin-grid">
+        <section class="orders-board admin-card">
+          <div class="admin-card-head"><div><p class="eyebrow">Fila de pedidos</p><h2>Atendimento</h2></div><div class="order-filters" id="order-filters"><button class="active" data-filter="active">Ativos</button><button data-filter="all">Todos</button><button data-filter="delivered">Entregues</button></div></div>
+          <div id="orders-list" class="orders-list"></div>
+        </section>
+
+        <aside class="admin-sidebar">
+          <section class="admin-card prices-card">
+            <p class="eyebrow">Preços</p><h2>Altere em segundos</h2><p>Os sabores da mesma categoria usam o mesmo preço. Água já está em R$ 3,00.</p>
+            <form id="prices-form" class="price-editor"></form>
+            <button class="button primary full" id="save-prices" type="button">Salvar preços</button>
+          </section>
+
+          <section class="admin-card stock-card">
+            <div class="admin-card-head"><div><p class="eyebrow">Estoque</p><h2>Disponibilidade</h2></div><span class="stock-count" id="stock-count"></span></div>
+            <div id="stock-list" class="stock-list"></div>
+          </section>
+
+          <section class="admin-card links-card">
+            <p class="eyebrow">QR por barraca</p><h2>Links prontos</h2><p>Depois de publicar, abra o gerador para imprimir um QR diferente para cada barraca.</p>
+            <a class="button ghost full" href="qrs.html" target="_blank" rel="noopener">Abrir gerador de QR ↗</a>
+          </section>
+        </aside>
+      </div>
+    </section>
+
+    <section class="backend-warning hidden" id="backend-warning">
+      <h2>O backend ainda não está configurado.</h2>
+      <p>A loja continua podendo funcionar pelo WhatsApp, mas o painel centralizado exige as variáveis <code>ADMIN_USER</code>, <code>ADMIN_PASSWORD</code> e <code>SESSION_SECRET</code> no Netlify.</p>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="js/painel.js"></script>
+</body>
+</html>

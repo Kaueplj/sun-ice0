@@ -1,0 +1,104 @@
+SUN & ICE — VERSÃO EVENTO 3.0
+=============================
+
+O QUE ESTA VERSÃO FAZ
+---------------------
+- Catálogo completo: água, brownie, 6 picolés e 8 sacolés.
+- Água configurada em R$ 3,00.
+- Brownie, picolé e sacolé ficam como "Preço em breve" até a equipe definir o valor no painel.
+- Carrinho multiproduto com total automático.
+- Pix com botão para copiar a chave.
+- Pedido organizado no WhatsApp com código SUN-XXXXXX.
+- QR diferente para Barraca 1, 2 e 3.
+- Backend no Netlify para registrar pedidos e sincronizar o painel entre celulares.
+- Painel privado com login, faturamento, fila de pedidos, preços, loja aberta/pausada e produto esgotado.
+- Modo de contingência: se o backend cair, o cliente ainda consegue mandar o pedido pelo WhatsApp.
+- PWA/cache de arquivos principais para melhorar resistência em internet ruim.
+
+IMPORTANTE: PARA TER O PAINEL SINCRONIZADO, O NETLIFY PRECISA EXECUTAR O BUILD.
+Opção mais segura: importar pelo GitHub/GitLab. Também é possível arrastar a PASTA INTEIRA do projeto estando logado no Netlify, para que ele detecte e execute o build. Não publique apenas os arquivos HTML isolados.
+
+PASSO A PASSO PARA PUBLICAR NO NETLIFY
+--------------------------------------
+1. Suba ESTA pasta para um repositório Git (GitHub é o mais fácil).
+2. No Netlify: Add new project > Import an existing project.
+3. Escolha o repositório.
+4. O arquivo netlify.toml já informa:
+   - Build command: npm run build
+   - Publish directory: dist
+   - Functions: netlify/functions
+5. Antes/depois do primeiro deploy, abra:
+   Project configuration > Environment variables
+6. Crie estas 3 variáveis:
+
+   ADMIN_USER
+   Valor sugerido: equipe
+
+   ADMIN_PASSWORD
+   Escolha uma senha forte que só a equipe saiba.
+   Exemplo de formato: Sol&Ice-2026-ALGUMA-COISA
+   NÃO coloque a senha no código nem no GitHub.
+
+   SESSION_SECRET
+   Coloque uma sequência aleatória longa (40+ caracteres).
+   Pode usar uma senha aleatória gerada pelo seu gerenciador de senhas.
+
+7. Faça um novo deploy depois de criar as variáveis.
+8. Abra https://SEU-SITE.netlify.app/painel
+9. Entre com ADMIN_USER + ADMIN_PASSWORD.
+10. No painel, defina os 3 preços que ainda faltam:
+    - Brownie
+    - Picolés
+    - Sacolés
+11. Marque produtos esgotados conforme necessário.
+12. Abra https://SEU-SITE.netlify.app/qrs para imprimir os QRs das 3 barracas.
+
+COMO A SENHA FUNCIONA
+---------------------
+A senha NÃO fica salva no HTML, JavaScript público ou localStorage.
+Ela fica como variável privada ADMIN_PASSWORD dentro do Netlify.
+Ao entrar, o servidor cria um cookie de sessão HttpOnly + Secure que dura até 12 horas.
+O navegador lembra a sessão, não a senha. No dia seguinte a equipe pode precisar entrar novamente.
+
+COMO A EQUIPE USA O PAINEL
+--------------------------
+NOVO      = pedido entrou, aguardando conferência do comprovante.
+PAGO      = equipe conferiu o Pix.
+PRONTO    = produto separado.
+ENTREGUE  = cliente retirou.
+CANCELADO = pedido descartado.
+
+O faturamento soma apenas PAGO + PRONTO + ENTREGUE. Pedido NOVO não entra no faturamento.
+
+COMO O CLIENTE COMPRA
+---------------------
+1. Escaneia o QR da barraca.
+2. Escolhe os produtos.
+3. Informa primeiro nome.
+4. Faz o Pix.
+5. Marca a confirmação.
+6. Toca em "Abrir pedido no WhatsApp".
+7. O WhatsApp abre com pedido, total, barraca e código já preenchidos.
+8. Cliente toca em ENVIAR e anexa o comprovante.
+9. Equipe confere, marca PAGO e depois ENTREGUE.
+
+ANTES DE ABRIR AS VENDAS
+------------------------
+[ ] Confirmar se o WhatsApp 5581994976997 está correto.
+[ ] Confirmar chave Pix caaturma@gmail.com.
+[ ] Confirmar recebedor Ana Beatriz Nunes.
+[ ] Definir preços de brownie, picolé e sacolé no painel.
+[ ] Testar um pedido de verdade em Android.
+[ ] Testar um pedido de verdade em iPhone, se houver.
+[ ] Testar QR Barraca 1, 2 e 3.
+[ ] Confirmar que o pedido aparece no painel.
+[ ] Confirmar que o WhatsApp recebe a mensagem.
+[ ] Confirmar que "Esgotado" aparece imediatamente ao desligar um produto.
+[ ] Deixar uma pessoa responsável por conferir Pix/painel.
+
+MODO DE EMERGÊNCIA
+------------------
+Se o painel/Netlify Functions tiver uma falha momentânea, a loja muda para "modo reserva".
+O pedido continua indo para o WhatsApp. Nesse caso, o WhatsApp + comprovante vira a fonte oficial para aquela venda.
+
+Depois do evento você pode simplesmente desativar/excluir o projeto no Netlify.
