@@ -3,9 +3,9 @@ SUN & ICE — VERSÃO EVENTO 3.0
 
 O QUE ESTA VERSÃO FAZ
 ---------------------
-- Catálogo completo: água, brownie, 6 picolés e 8 sacolés.
+- Catálogo completo: água, 3 brownies, 6 picolés e 5 sacolés.
 - Água configurada em R$ 3,00.
-- Brownie, picolé e sacolé ficam como "Preço em breve" até a equipe definir o valor no painel.
+- Todos os produtos já têm preço inicial definido e cada preço pode ser alterado individualmente pelo painel.
 - Carrinho multiproduto com total automático.
 - Pix com botão para copiar a chave.
 - Pedido organizado no WhatsApp com código SUN-XXXXXX.
@@ -47,7 +47,9 @@ PASSO A PASSO PARA PUBLICAR NO NETLIFY
 8. Abra https://SEU-SITE.netlify.app/painel
 9. Entre com ADMIN_USER + ADMIN_PASSWORD.
 10. No painel, defina os 3 preços que ainda faltam:
-    - Brownie
+    - Brownie de Brigadeiro
+    - Brownie Bem-casado
+    - Brownie de Ninho
     - Picolés
     - Sacolés
 11. Marque produtos esgotados conforme necessário.
@@ -87,7 +89,7 @@ ANTES DE ABRIR AS VENDAS
 [ ] Confirmar se o WhatsApp 5581994976997 está correto.
 [ ] Confirmar chave Pix caaturma@gmail.com.
 [ ] Confirmar recebedor Ana Beatriz Nunes.
-[ ] Definir preços de brownie, picolé e sacolé no painel.
+[ ] Conferir os preços individuais de todos os produtos no painel.
 [ ] Testar um pedido de verdade em Android.
 [ ] Testar um pedido de verdade em iPhone, se houver.
 [ ] Testar QR Barraca 1, 2 e 3.

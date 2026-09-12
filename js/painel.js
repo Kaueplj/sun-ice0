@@ -1,4 +1,4 @@
-import { PRODUCTS, PRICE_LABELS, normalizeSettings } from "../shared/catalog.mjs";
+import { PRODUCTS, normalizeSettings } from "../shared/catalog.mjs";
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const money = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
@@ -110,11 +110,32 @@ function renderStoreControls() {
 function renderPriceEditor() {
   const form = $("#prices-form");
   form.innerHTML = "";
-  Object.entries(PRICE_LABELS).forEach(([group, label]) => {
+
+  PRODUCTS.forEach((product) => {
     const row = document.createElement("div");
     row.className = "price-row";
-    const value = state.settings.prices?.[group];
-    row.innerHTML = `<label for="price-${group}">${label}</label><div class="price-input-wrap"><span>R$</span><input id="price-${group}" data-price-group="${group}" inputmode="decimal" type="number" min="0.01" max="100" step="0.50" value="${value ?? ""}" placeholder="--"></div>`;
+    const value = state.settings.productPrices?.[product.id];
+
+    row.innerHTML = `
+      <label for="price-${product.id}">
+        ${escapeHTML(product.name)}
+        <small>${escapeHTML(product.category)}</small>
+      </label>
+      <div class="price-input-wrap">
+        <span>R$</span>
+        <input
+          id="price-${product.id}"
+          data-price-id="${product.id}"
+          inputmode="decimal"
+          type="number"
+          min="0.01"
+          max="100"
+          step="0.50"
+          value="${value ?? ""}"
+          placeholder="--"
+        >
+      </div>`;
+
     form.append(row);
   });
 }
@@ -203,12 +224,23 @@ async function updateOrder(id, status) {
 }
 
 async function savePrices() {
-  const prices = {};
-  document.querySelectorAll("[data-price-group]").forEach((input) => { prices[input.dataset.priceGroup] = input.value === "" ? null : Number(input.value); });
+  const productPrices = {};
+
+  document.querySelectorAll("[data-price-id]").forEach((input) => {
+    productPrices[input.dataset.priceId] = input.value === "" ? null : Number(input.value);
+  });
+
   try {
-    const result = await api("/api/admin/settings", { method: "PATCH", body: JSON.stringify({ prices }) });
-    state.settings = normalizeSettings(result.settings); renderPriceEditor(); toast("Preços publicados na loja ✓");
-  } catch (error) { toast(error.message); }
+    const result = await api("/api/admin/settings", {
+      method: "PATCH",
+      body: JSON.stringify({ productPrices })
+    });
+    state.settings = normalizeSettings(result.settings);
+    renderPriceEditor();
+    toast("Preços publicados na loja ✓");
+  } catch (error) {
+    toast(error.message);
+  }
 }
 
 async function saveStoreState() {

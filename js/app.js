@@ -1,9 +1,9 @@
 import { PRODUCTS, PRODUCT_MAP, DEFAULT_SETTINGS, normalizeSettings, productPrice } from "../shared/catalog.mjs";
 
-const CART_KEY = "sunice:cart:v3";
+const CART_KEY = "sunice:cart:v4";
 const LAST_ORDER_KEY = "sunice:last-order:v3";
 const CUSTOMER_NAME_KEY = "sunice:customer-name:v1";
-const SETTINGS_CACHE_KEY = "sunice:settings-cache:v1";
+const SETTINGS_CACHE_KEY = "sunice:settings-cache:v2";
 const SUCCESS_FLAG = "sunice:return-success:v1";
 const money = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
 const $ = (selector, root = document) => root.querySelector(selector);

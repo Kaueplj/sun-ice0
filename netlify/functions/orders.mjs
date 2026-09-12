@@ -40,8 +40,7 @@ export default async function handler(req) {
     if (totalQty > 50 || total <= 0 || total > 1500) return json({ error: "Pedido fora dos limites permitidos." }, 400);
     total = Math.round(total * 100) / 100;
 
-    const order = {
-      id: orderId(),
+    const baseOrder = {
       customerName,
       stand,
       items,
@@ -51,9 +50,20 @@ export default async function handler(req) {
       clientCreatedAt: cleanString(input.clientCreatedAt, 40) || null
     };
 
+    let order;
     await saveOrders((orders) => {
-      const next = [order, ...orders.filter((item) => item?.id !== order.id)];
-      return next.slice(0, 2500);
+      const usedIds = new Set(orders.map((item) => item?.id).filter(Boolean));
+      let id = null;
+      for (let attempt = 0; attempt < 20; attempt += 1) {
+        const candidate = orderId();
+        if (!usedIds.has(candidate)) {
+          id = candidate;
+          break;
+        }
+      }
+      if (!id) throw new Error("Não foi possível gerar um código único para o pedido.");
+      order = { id, ...baseOrder };
+      return [order, ...orders].slice(0, 2500);
     });
     return json({ order }, 201);
   } catch (error) {
